@@ -1,0 +1,34 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "Its my first project on NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satyaprakash-23/DevTinder.git"
+  },
+  "keywords": [
+    "NodeJs",
+    "ReactJs",
+    "JavaScript"
+  ],
+  "author": "Satya Prakash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satyaprakash-23/DevTinder/issues"
+  },
+  "homepage": "https://github.com/satyaprakash-23/DevTinder#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "validator": "^13.15.0"
+  }
+}
