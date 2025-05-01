@@ -1,6 +1,6 @@
 const express = require("express");
-const connectDB = require("./config/database");
-const User = require("./models/user");
+const connectDB = require("./config/database.js");
+const User = require("./models/user.js");
 const app = express();
 const cookieParser = require("cookie-parser");
 
@@ -8,19 +8,28 @@ const { authRouter } = require("./routes/auth.js");
 const {profileRouter} = require("./routes/profile.js")
 const {request} = require("./routes/request.js")
 const {userRouter} = require("./routes/user.js")
-const {bookRouter} = require("./routes/book.js")
+const cors = require("cors");
+
+
 // const 
 
 // console.log(authRouter);
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/",bookRouter)
+
 app.use("/", authRouter);
 app.use("/",profileRouter);
 app.use("/",request)
 app.use("/",userRouter)
-app.use("/",bookRouter)
+
 
 
 connectDB()
