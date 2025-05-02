@@ -2,13 +2,39 @@ import { Menu } from "lucide-react";
 import { useState } from "react";
 import logo from "../assets/tinder.png";
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { BASE_URL } from "../utils/constants";
+import { removeUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const NavBar = () => {
   const [menuState, setMenuState] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleMenu = () => {
     setMenuState(!menuState);
   };
+  const handleLogout = async ()=>{
+    try{
+      const response = await fetch(`${BASE_URL}/logout`,{
+        method : "POST",
+        credentials : "include"
+      })
+      // console.log(response);
+      
+      if (!response.ok) {
+        throw new Error(`Logout failed with status: ${response.status}`);
+      }
+      
+      dispatch(removeUser());
+     
+      navigate("/login");
+      setMenuState(false);
+    }
+    catch(err){
+      console.error("Logout Error " + err.message)
+    }
+  }
   const photoUrl = useSelector((state) => state.user?.photoUrl);
   return (
     <nav className="flex justify-between font-bold border-2 p-3 items-center">
@@ -42,7 +68,7 @@ const NavBar = () => {
           >
             Message
           </button>
-          <button
+          <button onClick={handleLogout}
             className="hover:bg-gray-700
               "
           >
