@@ -2,9 +2,11 @@ import { useState } from "react";
 import { addUser,removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email,setEmail] = useState("satya@gmail.com");
   const [password,setPassword] = useState("Satya@1234");
   const user = useSelector((state)=>state.user)
@@ -25,6 +27,7 @@ const Login = () => {
       })
       const data = await response.json();
       dispatch(addUser(data))
+      return navigate("/")
          }catch{
 
     }

@@ -7,7 +7,7 @@ profileRouter.get("/profile/view", userAuth, (req, res) => {
   try {
     res.send(req.user);
   } catch (err) {
-    res.status(400).send("can't fetch the data " + err.message);
+    res.status(401).send("can't fetch the data " + err.message);
   }
 });
 
@@ -30,21 +30,20 @@ profileRouter.patch("/profile/update", userAuth, async (req, res) => {
   if (isEditAllowed) {
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
     res.send("profile updated succesfully!!");
-    await loggedInUser.save()
+    await loggedInUser.save();
   } else {
     res.send("profile doesn't updated successfully");
   }
 });
 
-profileRouter.patch("/profile/password",userAuth,async (req,res)=>{
-  const {newPassword} = req.body;
+profileRouter.patch("/profile/password", userAuth, async (req, res) => {
+  const { newPassword } = req.body;
   const loggedInUser = req.user;
   // console.log("what was i made for " + hash);
   loggedInUser.password = newPassword;
   await loggedInUser.save();
   res.send("Password updated successfully !!");
-  
-})
+});
 
 module.exports = {
   profileRouter,
