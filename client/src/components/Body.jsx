@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
+import SideBar from "./SideBar";
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,11 @@ const Body = () => {
   return (
     <div className="flex flex-col min-h-screen ">
       <NavBar />
-      <Outlet />
+      <div className="flex ">
+        <SideBar />
+        <Outlet />
+      </div>
+      
       <Footer />
     </div>
   );

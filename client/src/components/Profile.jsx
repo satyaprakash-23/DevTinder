@@ -16,12 +16,12 @@ const Profile = () => {
   const [about, setAbout] = useState("");
   const [_id, setId] = useState("");
   const [dropDown, setDropDown] = useState(false);
-  const [error,setError] =  useState("");
+  const [error, setError] = useState("");
 
   const handleGender = (e) => {
     console.log(e.target.innerHTML);
     setGender(e.target.innerHTML);
-    handleDropDown()
+    handleDropDown();
   };
 
   useEffect(() => {
@@ -54,14 +54,14 @@ const Profile = () => {
         credentials: "include",
       });
       console.log(response);
-      
+
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error)
+        setError(data.error);
         throw new Error(data.error || "Something went wrong");
       }
-      setError("")
+      setError("");
 
       console.log(data);
 
@@ -79,8 +79,8 @@ const Profile = () => {
   }
   return (
     <div
-      className="flex flex-col sm:flex-row
-     justify-center m-10 h-screen"
+      className="flex flex-col md:flex-row
+     justify-center h-screen w-screen items-center mt-9"
     >
       <div className="card w-96 bg-base-100 shadow-sm flex flex-col items-center p-10 max-h-5/6 overflow-y-scroll hide-scrollbar">
         <div>
@@ -154,17 +154,21 @@ const Profile = () => {
         </fieldset>
         <fieldset className="fieldset">
           <legend className="fieldset-legend font-bold">about</legend>
-          <textarea className="textarea w-80" placeholder="About" value={about}
-            onChange={(e) => setAbout(e.target.value)}></textarea>
+          <textarea
+            className="textarea w-80"
+            placeholder="About"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
+          ></textarea>
         </fieldset>
-          <p className="text-red-500">{error}</p>
+        <p className="text-red-500">{error}</p>
         <div className="mt-6">
           <button className="btn btn-primary btn-block " onClick={handleSave}>
             Save
           </button>
         </div>
       </div>
-      <div className="max-h-5/6 overflow-y-scroll hide-scrollbar">
+      <div className="max-h-5/6 overflow-y-scroll ">
         <UserCard
           userFeed={{ _id, firstName, lastName, photoUrl, age, gender, about }}
         />

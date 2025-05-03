@@ -36,7 +36,7 @@ const NavBar = () => {
   };
   const photoUrl = useSelector((state) => state.user?.photoUrl);
   return (
-    <nav className="flex justify-between font-bold border-2 p-3 items-center">
+    <nav className="fixed w-screen flex justify-between font-bold p-4  items-center z-50 bg-base-200">
       <a href="/">
         <div className="w-10 flex items-center ">
           <img alt="logo" src={logo} />
