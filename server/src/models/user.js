@@ -89,7 +89,7 @@ const userSchema = new Schema(
     },
     about: {
       type: String,
-      maxLength: 50,
+      maxLength: 200,
       default: "Hey I'm software developer nice to meet you",
     },
     skills: {

@@ -14,7 +14,10 @@ const Body = () => {
   const location = useLocation();
   const userData = useSelector((state)=>state.user);
   const profileView = async () => {
+    // console.log("fuction called1");
+    
     if(userData) return;
+    // console.log("fuction called2");
     try {
       const response = await fetch(`${BASE_URL}/profile/view`, {
         method: "GET",
@@ -40,7 +43,7 @@ const Body = () => {
     profileView();
   },[location.pathname]);
   return (
-    <div>
+    <div className="flex flex-col min-h-screen ">
       <NavBar />
       <Outlet />
       <Footer />

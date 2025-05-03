@@ -14,27 +14,26 @@ const NavBar = () => {
   const handleMenu = () => {
     setMenuState(!menuState);
   };
-  const handleLogout = async ()=>{
-    try{
-      const response = await fetch(`${BASE_URL}/logout`,{
-        method : "POST",
-        credentials : "include"
-      })
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
       // console.log(response);
-      
+
       if (!response.ok) {
         throw new Error(`Logout failed with status: ${response.status}`);
       }
-      
+
       dispatch(removeUser());
-     
+
       navigate("/login");
       setMenuState(false);
+    } catch (err) {
+      console.error("Logout Error " + err.message);
     }
-    catch(err){
-      console.error("Logout Error " + err.message)
-    }
-  }
+  };
   const photoUrl = useSelector((state) => state.user?.photoUrl);
   return (
     <nav className="flex justify-between font-bold border-2 p-3 items-center">
@@ -51,24 +50,26 @@ const NavBar = () => {
         </div>
       </button>
       <div
-        className={` border-2 absolute top-18 right-2 ${
+        className={` border-2 absolute top-18 right-2 z-1 w-30 ${
           menuState ? "visible" : "invisible"
         }`}
       >
-        <div className="flex flex-col p-1">
+        <div className="flex flex-col p-1 text-center">
           <button
             className="hover:bg-gray-700
               "
           >
-            RequestsReceived
+            <Link to="/profile">Profile</Link>
           </button>
+
           <button
             className="hover:bg-gray-700
               "
           >
             Message
           </button>
-          <button onClick={handleLogout}
+          <button
+            onClick={handleLogout}
             className="hover:bg-gray-700
               "
           >

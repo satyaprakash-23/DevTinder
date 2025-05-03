@@ -17,6 +17,7 @@ const cors = require("cors");
 app.use(
   cors({
     origin: "http://localhost:5173",
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
     credentials: true,
   })
 );
@@ -40,7 +41,7 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.log("DataBase is not connected successfully ");
+    console.log("DataBase is not connected successfully " );
   });
 
 

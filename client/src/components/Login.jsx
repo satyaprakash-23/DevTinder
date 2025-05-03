@@ -23,11 +23,11 @@ const Login = () => {
           emailID : email,
           password : password
         }),
-        credentials : 'include'
+        credentials : 'include' 
       })
       const data = await response.json();
       dispatch(addUser(data))
-      return navigate("/")
+      return navigate("/feed")
          }catch{
 
     }

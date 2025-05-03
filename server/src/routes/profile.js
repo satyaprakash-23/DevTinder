@@ -2,6 +2,7 @@ const express = require("express");
 const profileRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const User = require("../models/user");
+const { validateEditProfile } = require("../utils/validation");
 
 profileRouter.get("/profile/view", userAuth, (req, res) => {
   try {
@@ -11,28 +12,23 @@ profileRouter.get("/profile/view", userAuth, (req, res) => {
   }
 });
 
-profileRouter.patch("/profile/update", userAuth, async (req, res) => {
+profileRouter.post("/profile/update", userAuth, async (req, res) => {
   const loggedInUser = req.user;
-  const allowedEdits = [
-    "firstName",
-    "lastName",
-    "age",
-    "gender",
-    "about",
-    "skills",
-    "photoUrl",
-  ];
-  const isEditAllowed = Object.keys(req.body).every((key) =>
-    allowedEdits.includes(key)
-  );
-  console.log(isEditAllowed);
 
-  if (isEditAllowed) {
+  try {
+    validateEditProfile(req);
+    // console.log("hey" + err);
+    
+
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
-    res.send("profile updated succesfully!!");
+
+
     await loggedInUser.save();
-  } else {
-    res.send("profile doesn't updated successfully");
+    res.json({ message: "Profile updated successfully", loggedInUser });
+  } catch (err) {
+    console.log(err.message);
+    
+    res.status(400).json({ error: err.message });
   }
 });
 
