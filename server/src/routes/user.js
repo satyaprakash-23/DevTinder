@@ -17,12 +17,12 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
     //     res.status(404).json({message : "You don't have any requests"});
     // }
     if (connectionRequest.length === 0) {
-      res.send("You don't have any requests");
+      res.json({ message: "You don't have any requests", connectionRequest });
     } else {
       res.json(connectionRequest);
     }
   } catch (err) {
-    res.status(404).send("Something went wrong " + err.message);
+    res.status(404).json({ error: "Something went wrong " + err.message });
   }
 });
 
@@ -34,7 +34,10 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       status: "accepted",
     });
     if (connectionsDoc.length === 0) {
-      res.json({ message: "Its seems there is no connections " ,connections : {}});
+      res.json({
+        message: "Its seems there is no connections ",
+        connections: [],
+      });
     }
     const data = connectionsDoc.map((connection) => {
       return connection.toUserId.equals(loggedInUser._id)
@@ -47,9 +50,9 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
     });
     const connections = await Promise.all(userPromises);
 
-    res.json({message:"Your connections" , connections});
+    res.json({ message: "Your connections", connections });
   } catch (err) {
-    res.status(404).json({error : "Something went wrong " + err.message});
+    res.status(404).json({ error: "Something went wrong " + err.message });
   }
 });
 
@@ -66,7 +69,7 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
         : connection.toUserId;
     });
 
-    userToHide.push(loggedInUser)
+    userToHide.push(loggedInUser);
 
     const feed = [];
     allUser.forEach((user) => {

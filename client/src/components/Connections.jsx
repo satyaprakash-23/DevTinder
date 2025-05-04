@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
 
 const Connections = () => {
+  const [loading, setLoading] = useState(true);
   const userConnections = useSelector((state) => state.connections);
-  const { connections } = userConnections;
+  const connections = userConnections?.connections || [];
   console.log(connections);
 
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const Connections = () => {
       dispatch(addConnections(data));
     } catch (err) {
       console.error("Fetch connections failed:", err.message);
+    } finally {
+      setLoading(false); // Always stop loading, success or error
     }
   };
 
@@ -30,7 +33,9 @@ const Connections = () => {
     fetchConnections();
   }, []);
 
-  if (connections.length === 0) {
+  if (loading) return <h2>Loading connections...</h2>;
+
+  if (!connections || connections.length === 0) {
     return <h1>"There is no connection"</h1>;
   }
   return (
@@ -39,7 +44,7 @@ const Connections = () => {
       <ul className="list bg-base-100 rounded-box shadow-md w-3/5">
         {connections.map((connection, index) => {
           return (
-            <li className="list-row flex items-center">
+            <li className="list-row flex items-center" key={connection._id}>
               <div>
                 <img
                   className="size-13 rounded-box"
