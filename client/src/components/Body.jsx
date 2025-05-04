@@ -44,9 +44,9 @@ const Body = () => {
     profileView();
   },[location.pathname]);
   return (
-    <div className="flex flex-col min-h-screen ">
+    <div className="flex flex-col min-h-screen justify-between ">
       <NavBar />
-      <div className="flex ">
+      <div className="">
         <SideBar />
         <Outlet />
       </div>

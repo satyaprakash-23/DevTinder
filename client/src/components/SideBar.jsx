@@ -5,12 +5,14 @@ import { Link } from "react-router";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../utils/userSlice";
+import { useNavigate } from "react-router";
 
 const SideBar = () => {
   const userData = useSelector((state) => state.user);
   const photoUrl = userData?.photoUrl;
   const [drawer, setDrawer] = useState(false);
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       const response = await fetch(`${BASE_URL}/logout`, {
@@ -52,13 +54,18 @@ const SideBar = () => {
             
           </div>
           <div className="flex flex-col p-1 text-center">
-          <button
-            className="btn hover:bg-gray-700 h-10
-              "
-          >
-            <Link to="/profile">Profile</Link>
-          </button>
-
+          <Link to="/profile"  className="btn hover:bg-gray-700 h-10
+              ">
+          
+            Profile
+       
+          </Link>
+          <Link to="/connections"  className="btn hover:bg-gray-700 h-10
+              ">
+          
+            Connection
+       
+          </Link>
           <button
             className="btn hover:bg-gray-700
               "
@@ -72,6 +79,7 @@ const SideBar = () => {
           >
             Logout
           </button>
+          
         </div>
         
           </div>

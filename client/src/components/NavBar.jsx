@@ -37,7 +37,7 @@ const NavBar = () => {
   const photoUrl = useSelector((state) => state.user?.photoUrl);
   return (
     <nav className="fixed w-screen flex justify-between font-bold p-4  items-center z-50 bg-base-200">
-      <a href="/">
+      <a href="/feed">
         <div className="w-10 flex items-center ">
           <img alt="logo" src={logo} />
           <div className="text-2xl">DevTinder </div>

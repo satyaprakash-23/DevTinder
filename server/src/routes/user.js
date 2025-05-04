@@ -34,7 +34,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       status: "accepted",
     });
     if (connectionsDoc.length === 0) {
-      res.json({ message: "Its seems there is no connections " });
+      res.json({ message: "Its seems there is no connections " ,connections : {}});
     }
     const data = connectionsDoc.map((connection) => {
       return connection.toUserId.equals(loggedInUser._id)
@@ -47,9 +47,9 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
     });
     const connections = await Promise.all(userPromises);
 
-    res.send(connections);
+    res.json({message:"Your connections" , connections});
   } catch (err) {
-    res.status(404).send("Something went wrong " + err.message);
+    res.status(404).json({error : "Something went wrong " + err.message});
   }
 });
 
