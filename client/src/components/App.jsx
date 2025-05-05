@@ -8,6 +8,7 @@ import Body from "./Body.jsx";
 import Feed from "./feed.jsx";
 import Profile from "./Profile.jsx";
 import Connections from "./Connections.jsx";
+import RequestReceived from "./RequestsReceived.jsx";
 
 const App = () => {
   return (
@@ -15,11 +16,13 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Body />}>
+            <Route index element={<Feed />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed" index element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/connections" element={<Connections/>} />
+            <Route path="/connections" element={<Connections />} />
+            <Route path="/requests" element={<RequestReceived />} />
           </Route>
         </Routes>
       </BrowserRouter>

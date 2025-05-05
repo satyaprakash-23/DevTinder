@@ -13,6 +13,9 @@ const SideBar = () => {
   const [drawer, setDrawer] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const handleDrawer = ()=>{
+    setDrawer(false)
+  }
   const handleLogout = async () => {
     try {
       const response = await fetch(`${BASE_URL}/logout`, {
@@ -27,6 +30,7 @@ const SideBar = () => {
 
       dispatch(removeUser());
 
+      setDrawer(false)
       navigate("/login");
       // setMenuState(false);
     } catch (err) {
@@ -34,7 +38,7 @@ const SideBar = () => {
     }
   };
   return (
-    <div className="hidden md:block">
+    <div className="hidden md:block ">
       <div
         className={`transition-all duration-400 ease-in-out fixed top-17 left-0 h-screen bg-base-200  p-5 ${
           drawer ? "w-1/4 z-50 " : "w-14"
@@ -54,26 +58,39 @@ const SideBar = () => {
             
           </div>
           <div className="flex flex-col p-1 text-center">
+          <Link to="/feed"  className="btn hover:bg-gray-700 h-10
+              " onClick={handleDrawer}>
+          
+            Home
+       
+          </Link>
           <Link to="/profile"  className="btn hover:bg-gray-700 h-10
-              ">
+              " onClick={handleDrawer}>
           
             Profile
        
           </Link>
           <Link to="/connections"  className="btn hover:bg-gray-700 h-10
-              ">
+              " onClick={handleDrawer}>
           
             Connection
        
           </Link>
+          <Link to="/requests"  className="btn hover:bg-gray-700 h-10
+              " onClick={handleDrawer}>
+          
+            Request Received
+       
+          </Link>
           <button
             className="btn hover:bg-gray-700
-              "
+              " onClick={handleDrawer}
           >
             Message
           </button>
           <button
             onClick={handleLogout}
+            
             className="btn hover:bg-gray-700
               "
           >

@@ -1,6 +1,12 @@
+const User = require("../models/user");
 const validator = require("validator");
-const validation = (req) => {
+const validation = async (req) => {
   const { firstName, lastName, emailID, password } = req.body;
+  const userData = await User.findOne({ emailID: emailID });
+
+  if (userData) {
+    throw new Error("EmailID already exist");
+  }
   if (!firstName || !lastName || !emailID || !password) {
     throw new Error(
       "You have missed adding firstName, lastName, emailID or password"
@@ -13,7 +19,8 @@ const validation = (req) => {
 };
 
 const validateEditProfile = (req) => {
-  const { firstName, lastName, age, gender, about, skills, photoUrl } = req.body;
+  const { firstName, lastName, age, gender, about, skills, photoUrl } =
+    req.body;
 
   const allowedEdits = [
     "firstName",
@@ -24,16 +31,15 @@ const validateEditProfile = (req) => {
     "skills",
     "photoUrl",
   ];
-  
-  
+
   const isEditAllowed = Object.keys(req.body).every((key) =>
     allowedEdits.includes(key)
   );
-  
+
   if (!isEditAllowed) {
     throw new Error("Invalid Edit Request");
   }
-  
+
   if (firstName && !validator.isAlpha(firstName, "en-US", { ignore: " " })) {
     throw new Error("First name should contain only letters");
   }
@@ -51,7 +57,7 @@ const validateEditProfile = (req) => {
     throw new Error("Gender should be 'male', 'female', or 'other'");
   }
 
-  if (about && typeof about !== "string" ) {
+  if (about && typeof about !== "string") {
     throw new Error("About section must be a string");
   }
 
@@ -66,5 +72,5 @@ const validateEditProfile = (req) => {
 
 module.exports = {
   validation,
-  validateEditProfile
+  validateEditProfile,
 };

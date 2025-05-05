@@ -15,6 +15,7 @@ const NavBar = () => {
     setMenuState(!menuState);
   };
   const handleLogout = async () => {
+    handleMenu()
     try {
       const response = await fetch(`${BASE_URL}/logout`, {
         method: "POST",
@@ -44,37 +45,66 @@ const NavBar = () => {
         </div>
       </a>
 
-      <button className="" onClick={handleMenu}>
+      <button className="visible sm:hidden" onClick={handleMenu}>
         <div className="w-10 h-10 overflow-hidden rounded-full">
           {photoUrl && <img alt="DP" src={photoUrl} />}
         </div>
       </button>
       <div
-        className={` border-2 absolute top-18 right-2 z-1 w-30 ${
+        className={` bg-base-200 opacity-70 border-2 absolute top-18 right-1 z-1 w-40 ${
           menuState ? "visible" : "invisible"
         }`}
       >
         <div className="flex flex-col p-1 text-center">
-          <button
-            className="hover:bg-gray-700
-              "
+        <Link
+            to="/feed"
+            className="btn hover:bg-gray-700 h-10
+                        "
+            onClick={handleMenu}
           >
-            <Link to="/profile">Profile</Link>
-          </button>
-
-          <button
-            className="hover:bg-gray-700
-              "
+            Home
+          </Link>
+          <Link
+            to="/profile"
+            className="btn hover:bg-gray-700 h-10
+                        "
+            onClick={handleMenu}
+          >
+            Profile
+          </Link>
+          <Link
+            to="/connections"
+            className="btn hover:bg-gray-700 h-10
+                        "
+            onClick={handleMenu}
+          >
+            Connection
+          </Link>
+          <Link
+            to="/requests"
+            className="btn hover:bg-gray-700 h-10
+                        "
+            onClick={handleMenu}
+          >
+            Request Received
+          </Link>
+          <Link
+            to=""
+            className="btn hover:bg-gray-700 h-10
+                        "
+            onClick={handleMenu}
           >
             Message
-          </button>
-          <button
+          </Link>
+          <Link
+            to=""
+            className="btn hover:bg-gray-700 h-10
+                        "
             onClick={handleLogout}
-            className="hover:bg-gray-700
-              "
           >
             Logout
-          </button>
+          </Link>
+          
         </div>
       </div>
       {/* <ul>

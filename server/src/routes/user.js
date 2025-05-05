@@ -12,14 +12,17 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
     const connectionRequest = await ConnectionRequest.find({
       toUserId: loggedInUser._id,
       status: "interested",
-    });
+    }).populate(
+      "fromUserId",
+      "id firstName lastName gender age about photoUrl"
+    );
     // if(!connectionRequest){
     //     res.status(404).json({message : "You don't have any requests"});
     // }
     if (connectionRequest.length === 0) {
       res.json({ message: "You don't have any requests", connectionRequest });
     } else {
-      res.json(connectionRequest);
+      res.json({ connectionRequest });
     }
   } catch (err) {
     res.status(404).json({ error: "Something went wrong " + err.message });
@@ -83,10 +86,9 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
       console.log(isPresent);
     });
     if (feed.length === 0) {
-      res.send("Theres no feed for you currently");
-    } else {
-      res.send(feed);
+      throw new Error("Theres no feed for you currently");
     }
+    res.json(feed);
   } catch (err) {
     res.status(404).json({ error: err.message });
   }

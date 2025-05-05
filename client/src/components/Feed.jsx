@@ -31,13 +31,13 @@ const Feed = () => {
     fetchFeed();
   }, []);
   return (
-    userFeed && (
+    userFeed?.length ? (
       <div className="w-full">
         <div className="flex justify-center mt-20 mb-3">
           <UserCard userFeed={userFeed[0]} />
         </div>
       </div>
-    )
+    ) : <h1 className="text-center mt-30">There's no feed</h1>
   );
 };
 

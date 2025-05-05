@@ -54,7 +54,7 @@ request.post("/request/send/:status/:toUserId", userAuth, async (req, res) => {
         .send(`${req.user.firstName} ignored ${toUserIdIsValid.firstName}`);
     }
   } catch (err) {
-    res.status(400).send("connectionRequest is invalid " + err.message);
+    res.status(400).json({error : "connectionRequest is invalid " + err.message});
   }
 });
 
@@ -86,7 +86,7 @@ request.post(
 
       res.json({ message: "Connection request " + status, data });
     } catch (err) {
-      res.status(404).send("Bad request " + err.message);
+      res.status(404).json({error : "Bad request " + err.message});
     }
   }
 );

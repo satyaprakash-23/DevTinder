@@ -17,11 +17,24 @@ const Profile = () => {
   const [_id, setId] = useState("");
   const [dropDown, setDropDown] = useState(false);
   const [error, setError] = useState("");
+  const [disable, setDisable] = useState(false);
 
   const handleGender = (e) => {
     console.log(e.target.innerHTML);
     setGender(e.target.innerHTML);
     handleDropDown();
+  };
+
+  const handleAbout = (e) => {
+    const about = e.target.value;
+    if (about.length > 160) {
+      setError("About section must contain atmost 160 characters");
+      setDisable(true);
+    } else {
+      setError("")
+      setDisable(false);
+      setAbout(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -80,9 +93,9 @@ const Profile = () => {
   return (
     <div
       className="flex flex-col md:flex-row
-     justify-center h-screen w-screen items-center mt-9"
+     justify-center sm:h-screen w-screen items-center mt-9"
     >
-      <div className="card w-96 bg-base-100 shadow-sm flex flex-col items-center p-10 max-h-5/6 overflow-y-scroll hide-scrollbar">
+      <div className="card w-96 bg-base-100 shadow-sm flex flex-col items-center p-10 sm:max-h-5/6 sm:overflow-y-scroll hide-scrollbar">
         <div>
           <h1 className="text-3xl font-bold">Update Profile</h1>
         </div>
@@ -156,19 +169,19 @@ const Profile = () => {
           <legend className="fieldset-legend font-bold">about</legend>
           <textarea
             className="textarea w-80"
-            placeholder="About"
+            placeholder="write about yourself in 160 characters"
             value={about}
-            onChange={(e) => setAbout(e.target.value)}
+            onChange={(e) => handleAbout(e)}
           ></textarea>
         </fieldset>
         <p className="text-red-500">{error}</p>
         <div className="mt-6">
-          <button className="btn btn-primary btn-block " onClick={handleSave}>
+          <button className={`btn btn-primary btn-block ${disable ? "cursor-not-allowed opacity-50" : ""}`} onClick={handleSave}>
             Save
           </button>
         </div>
       </div>
-      <div className="max-h-5/6 overflow-y-scroll ">
+      <div className="max-h-5/6 sm:overflow-y-scroll hide-scrollbar">
         <UserCard
           userFeed={{ _id, firstName, lastName, photoUrl, age, gender, about }}
         />
